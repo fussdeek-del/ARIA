@@ -1,0 +1,17 @@
+pyautogui
+pillow
+pytesseract
+pygetwindow
+pynput
+requests
+beautifulsoup4
+playwright
+sentence-transformers
+faiss-cpu
+chromadb
+openai
+anthropic
+feedparser
+newspaper3k
+python-dotenv
+websockets

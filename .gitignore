@@ -1,0 +1,8 @@
+.env
+node_modules/
+data/
+aria.log
+dist/
+*.pyc
+__pycache__/
+.venv/

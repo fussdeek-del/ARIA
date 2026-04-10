@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARIA — Autonomous Reasoning Intelligence Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       TOAST NOTIFICATION CONTAINER
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="toast-container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MAIN APPLICATION LAYOUT
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="app-layout">
+
+    <!-- ─── LEFT SIDEBAR ────────────────────────────────────────── -->
+    <aside id="left-sidebar" class="sidebar sidebar--left">
+      <div class="sidebar__header">
+        <div class="logo">
+          <span class="logo__icon">A</span>
+          <span class="logo__text">ARIA</span>
+        </div>
+        <button id="btn-collapse-left" class="sidebar__collapse" title="Collapse sidebar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <nav class="sidebar__nav">
+        <button class="nav-btn nav-btn--active" data-panel="chat" title="Chat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Chat</span>
+        </button>
+        <button class="nav-btn" data-panel="memory" title="Memory">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a4 4 0 014 4v1a4 4 0 01-8 0V6a4 4 0 014-4z"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Memory</span>
+        </button>
+        <button class="nav-btn" data-panel="news" title="News">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 8h6M7 12h6M7 16h4" stroke-linecap="round"/></svg>
+          <span>News</span>
+        </button>
+        <button class="nav-btn" data-panel="settings" id="nav-settings" title="Settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar__status">
+        <div class="status-item">
+          <span class="status-label">CPU</span>
+          <div class="status-bar"><div class="status-bar__fill" style="width: 34%"></div></div>
+          <span class="status-value">34%</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">RAM</span>
+          <div class="status-bar"><div class="status-bar__fill" style="width: 58%"></div></div>
+          <span class="status-value">58%</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Disk</span>
+          <div class="status-bar"><div class="status-bar__fill" style="width: 45%"></div></div>
+          <span class="status-value">45%</span>
+        </div>
+        <div class="provider-badge">
+          <span class="provider-dot" style="background:var(--warning);box-shadow:0 0 8px var(--warning)"></span>
+          <span class="provider-badge__name">Initializing...</span>
+        </div>
+      </div>
+
+      <div class="sidebar__footer">
+        <span class="version-text">ARIA v1.0.0</span>
+      </div>
+    </aside>
+
+    <!-- ─── CENTER MAIN PANEL ───────────────────────────────────── -->
+    <main class="main-panel">
+
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <button id="btn-expand-left" class="sidebar__expand sidebar__expand--left hidden" title="Expand left sidebar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="top-bar__provider">
+          <span class="top-bar__provider-icon">⚡</span>
+          <span id="top-provider-name">Initializing...</span>
+        </div>
+        <div class="top-bar__status">
+          <div id="mic-status" class="mic-status mic-status--idle">
+            <span class="mic-dot"></span>
+            <span class="mic-label">IDLE</span>
+          </div>
+        </div>
+        <button id="btn-expand-right" class="sidebar__expand sidebar__expand--right hidden" title="Expand right sidebar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </header>
+
+      <!-- Conversation Feed -->
+      <div id="conversation-feed" class="conversation-feed">
+
+        <!-- Welcome Message -->
+        <div class="welcome-message">
+          <div class="welcome-logo">A</div>
+          <h1 class="welcome-title">Hello, I'm ARIA</h1>
+          <p class="welcome-subtitle">Your Autonomous Reasoning Intelligence Agent</p>
+          <p class="welcome-hint">Type a command below, press <kbd>Ctrl+Space</kbd> to talk, or say <strong>"Hey ARIA"</strong></p>
+          <div class="welcome-chips">
+            <button class="chip" data-prompt="What can you do?">"What can you do?"</button>
+            <button class="chip" data-prompt="Open my browser">"Open my browser"</button>
+            <button class="chip" data-prompt="What's happening in AI today?">"AI news today?"</button>
+            <button class="chip" data-prompt="Take a screenshot">"Take a screenshot"</button>
+          </div>
+        </div>
+
+        <!-- Messages will be injected here by app.js -->
+      </div>
+
+      <!-- Waveform Bar (visible when ARIA is speaking) -->
+      <div id="waveform-bar" class="waveform-bar hidden">
+        <div class="waveform-bar__label">ARIA is speaking...</div>
+        <div class="waveform">
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+          <span class="waveform__bar"></span>
+        </div>
+      </div>
+
+      <!-- Bottom Input Bar -->
+      <div class="input-bar">
+        <div class="input-bar__container">
+          <input type="text" id="user-input" class="input-bar__field" placeholder="Type a command or say Hey ARIA..." autocomplete="off" spellcheck="false">
+          <button id="btn-mic" class="input-bar__btn input-bar__btn--mic" title="Push to talk (Ctrl+Space)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2" stroke-linecap="round"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23" stroke-linecap="round"/></svg>
+          </button>
+          <button id="btn-send" class="input-bar__btn input-bar__btn--send" title="Send message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- ─── RIGHT SIDEBAR ───────────────────────────────────────── -->
+    <aside id="right-sidebar" class="sidebar sidebar--right">
+      <div class="sidebar__header">
+        <div class="right-tabs">
+          <button class="right-tab right-tab--active" data-tab="tools">TOOLS</button>
+          <button class="right-tab" data-tab="memory">MEMORY</button>
+          <button class="right-tab" data-tab="news">NEWS</button>
+        </div>
+        <button id="btn-collapse-right" class="sidebar__collapse" title="Collapse sidebar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- TOOLS TAB -->
+      <div id="tab-tools" class="right-panel right-panel--active">
+        <div class="panel-section-title">Tool Execution Log</div>
+        <div id="tool-log" class="tool-log">
+          <!-- Tool entries injected by app.js -->
+        </div>
+      </div>
+
+      <!-- MEMORY TAB -->
+      <div id="tab-memory" class="right-panel">
+        <div class="memory-add">
+          <input type="text" id="memory-key-input" class="memory-add__input" placeholder="Key">
+          <input type="text" id="memory-value-input" class="memory-add__input memory-add__input--wide" placeholder="Value">
+          <button id="btn-add-memory" class="memory-add__btn" title="Add memory">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="panel-section-title">Stored Memories</div>
+        <div id="memory-list" class="memory-list">
+          <!-- Memory entries injected by app.js -->
+        </div>
+      </div>
+
+      <!-- NEWS TAB -->
+      <div id="tab-news" class="right-panel">
+        <div class="news-header">
+          <span class="news-updated">Last updated: <span id="news-timestamp">just now</span></span>
+          <button id="btn-refresh-news" class="news-refresh-btn" title="Refresh news">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+          </button>
+<div id="settings-modal" class="modal hidden">
+    <div class="modal__backdrop"></div>
+    <div class="modal__container">
+      <div class="modal__header">
+        <h2 class="modal__title">Settings</h2>
+        <button id="btn-close-settings" class="modal__close" title="Close settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="settings-tabs">
+          <button class="settings-tab settings-tab--active" data-settings-tab="providers">Providers</button>
+          <button class="settings-tab" data-settings-tab="voice">Voice & Audio</button>
+          <button class="settings-tab" data-settings-tab="news-sources">News Sources</button>
+          <button class="settings-tab" data-settings-tab="advanced">Advanced</button>
+        </div>
+        <div class="settings-content">
+
+          <!-- PROVIDERS TAB (Now includes API Keys + Model Config per provider) -->
+          <div id="settings-providers" class="settings-panel settings-panel--active">
+            <div class="settings-hint">Select your active provider. For each provider, enter your API Key and Model ID.</div>
+            
+            <div class="provider-setup-card" style="background:var(--surface); border:1px solid var(--border); padding:16px; border-radius:8px; margin-bottom:12px;">
+              <label style="display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:16px; cursor:pointer;">
+                <input type="radio" name="active-provider" value="claude"> <strong>Anthropic (Claude)</strong>
+              </label>
+              <input type="password" id="key-anthropic" class="settings-input" placeholder="API Key (sk-ant-...)" style="margin-bottom:8px;">
+              <input type="text" id="model-claude" class="settings-input" placeholder="Model ID (e.g. claude-3-5-sonnet-20241022)">
+            </div>
+
+            <div class="provider-setup-card" style="background:var(--surface); border:1px solid var(--border); padding:16px; border-radius:8px; margin-bottom:12px;">
+              <label style="display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:16px; cursor:pointer;">
+                <input type="radio" name="active-provider" value="openai"> <strong>OpenAI</strong>
+              </label>
+              <input type="password" id="key-openai" class="settings-input" placeholder="API Key (sk-...)" style="margin-bottom:8px;">
+              <input type="text" id="model-openai" class="settings-input" placeholder="Model ID (e.g. gpt-4o)">
+            </div>
+
+            <div class="provider-setup-card" style="background:var(--surface); border:1px solid var(--border); padding:16px; border-radius:8px; margin-bottom:12px;">
+              <label style="display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:16px; cursor:pointer;">
+                <input type="radio" name="active-provider" value="openrouter" checked> <strong>OpenRouter</strong>
+              </label>
+              <input type="password" id="key-openrouter" class="settings-input" placeholder="API Key (sk-or-...)" style="margin-bottom:8px;">
+              <input type="text" id="model-openrouter" class="settings-input" placeholder="Model ID (e.g. deepseek/deepseek-r1:free)">
+            </div>
+
+            <div class="provider-setup-card" style="background:var(--surface); border:1px solid var(--border); padding:16px; border-radius:8px; margin-bottom:24px;">
+              <label style="display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:16px; cursor:pointer;">
+                <input type="radio" name="active-provider" value="gemini"> <strong>Google Gemini</strong>
+              </label>
+              <input type="password" id="key-gemini" class="settings-input" placeholder="API Key (AIza...)" style="margin-bottom:8px;">
+              <input type="text" id="model-gemini" class="settings-input" placeholder="Model ID (e.g. gemini-1.5-pro)">
+            </div>
+
+            <div class="settings-group">
+              <label class="settings-label">Fallback Priority Order</label>
+              <p class="settings-hint">Drag to reorder. If the active provider fails, ARIA switches to the next one.</p>
+              <div id="fallback-order" class="fallback-list">
+                <div class="fallback-item" draggable="true" data-provider="openrouter">
+                  <span class="fallback-grip">⣿</span>
+                  <span>1. OpenRouter</span>
+                </div>
+                <div class="fallback-item" draggable="true" data-provider="gemini">
+                  <span class="fallback-grip">⣿</span>
+                  <span>2. Gemini</span>
+                </div>
+                <div class="fallback-item" draggable="true" data-provider="openai">
+                  <span class="fallback-grip">⣿</span>
+                  <span>3. OpenAI</span>
+                </div>
+                <div class="fallback-item" draggable="true" data-provider="claude">
+                  <span class="fallback-grip">⣿</span>
+                  <span>4. Claude</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-actions">
+              <button id="btn-save-providers" class="btn btn--primary">Save Providers & Keys</button>
+            </div>
+          </div>
+
+          <!-- VOICE TAB -->
+          <div id="settings-voice" class="settings-panel">
+            <div class="settings-group" style="background:var(--surface); padding:16px; border-radius:8px; border:1px solid var(--border); margin-bottom:16px;">
+              <label class="settings-label" style="color:var(--accent); font-size:15px; margin-bottom:4px">Microphone Setup (Speech-to-Text)</label>
+              <p class="settings-hint" style="margin-bottom:12px;">ARIA requires an <strong>OpenAI API Key</strong> to transcribe your voice using the Whisper model.</p>
+              <input type="password" id="key-openai-voice" class="settings-input" placeholder="OpenAI API Key (Required to listen)">
+            </div>
+
+            <div class="settings-group" style="background:var(--surface); padding:16px; border-radius:8px; border:1px solid var(--border); margin-bottom:24px;">
+              <label class="settings-label" style="color:var(--warning); font-size:15px; margin-bottom:4px">Speech Output (Text-to-Speech)</label>
+              <p class="settings-hint" style="margin-bottom:12px;">ARIA requires an <strong>ElevenLabs API Key</strong> and <strong>Voice ID</strong> to speak back to you loudly.</p>
+              <input type="password" id="key-elevenlabs" class="settings-input" placeholder="ElevenLabs API Key (Required to speak)" style="margin-bottom:8px;">
+              <input type="text" id="key-elevenlabs-voice" class="settings-input" placeholder="ElevenLabs Voice ID (Required to speak)">
+            </div>
+
+            <div class="settings-group">
+              <label class="settings-label">Wake Word Detection</label>
+              <div class="settings-toggle-wrap">
+                <label class="toggle">
+                  <input type="checkbox" id="toggle-wake-word" checked>
+                  <span class="toggle__slider"></span>
+                </label>
+                <span class="toggle-label">Enable "Hey ARIA" wake word</span>
+              </div>
+            </div>
+            <div class="settings-group">
+              <label class="settings-label">Custom Wake Word</label>
+              <input type="text" class="settings-input" id="custom-wake-word" value="hey aria" placeholder="Custom wake phrase...">
+            </div>
+            <div class="settings-group">
+              <label class="settings-label">ElevenLabs Voice</label>
+              <select class="settings-select" id="voice-selector">
+                <option value="default">Rachel (Default)</option>
+                <option value="adam">Adam</option>
+                <option value="bella">Bella</option>
+                <option value="domi">Domi</option>
+                <option value="elli">Elli</option>
+              </select>
+            </div>
+            <div class="settings-group">
+              <label class="settings-label">TTS Speed</label>
+              <div class="slider-wrap">
+                <input type="range" id="tts-speed" class="settings-slider" min="0.5" max="2" step="0.1" value="1.0">
+                <span class="slider-value" id="tts-speed-value">1.0x</span>
+              </div>
+            </div>
+            <div class="settings-actions">
+              <button id="btn-test-voice" class="btn btn--secondary">Test Voice</button>
+              <button id="btn-save-voice" class="btn btn--primary">Save Voice Settings</button>
+            </div>
+          </div>
+
+          <!-- NEWS SOURCES TAB -->
+          <div id="settings-news-sources" class="settings-panel">
+            <div class="settings-group">
+              <label class="settings-label">RSS Feed URLs</label>
+              <div id="rss-feed-list" class="rss-list">
+                <div class="rss-item">
+                  <input type="text" class="settings-input" value="https://feeds.bbci.co.uk/news/technology/rss.xml" readonly>
+                  <button class="rss-remove" title="Remove feed">✕</button>
+                </div>
+                <div class="rss-item">
+                  <input type="text" class="settings-input" value="https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml" readonly>
+                  <button class="rss-remove" title="Remove feed">✕</button>
+                </div>
+              </div>
+              <div class="rss-add">
+                <input type="text" id="rss-new-url" class="settings-input" placeholder="Add new RSS feed URL...">
+                <button id="btn-add-rss" class="btn btn--secondary">Add</button>
+              </div>
+            </div>
+            <div class="settings-group">
+              <label class="settings-label">NewsAPI Categories</label>
+              <div class="checkbox-grid">
+                <label class="checkbox-item"><input type="checkbox" checked> Technology</label>
+                <label class="checkbox-item"><input type="checkbox" checked> AI</label>
+                <label class="checkbox-item"><input type="checkbox" checked> World</label>
+                <label class="checkbox-item"><input type="checkbox" checked> Business</label>
+                <label class="checkbox-item"><input type="checkbox"> Science</label>
+                <label class="checkbox-item"><input type="checkbox"> Health</label>
+                <label class="checkbox-item"><input type="checkbox"> Sports</label>
+                <label class="checkbox-item"><input type="checkbox"> Entertainment</label>
+              </div>
+            </div>
+            <div class="settings-group">
+              <label class="settings-label">Fetch Interval</label>
+              <select class="settings-select" id="fetch-interval">
+                <option value="15">Every 15 minutes</option>
+                <option value="30" selected>Every 30 minutes</option>
+                <option value="60">Every hour</option>
+              </select>
+            </div>
+            <div class="settings-actions">
+              <button id="btn-save-news" class="btn btn--primary">Save News Settings</button>
+            </div>
+          </div>
+
+          <!-- ADVANCED TAB -->
+          <div id="settings-advanced" class="settings-panel">
+            <div class="settings-group">
+              <label class="settings-label">Log File Viewer</label>
+              <div class="log-viewer" id="log-viewer">
+                <pre class="log-content">[SYSTEM] ARIA v1.0.0 starting up...
+[SYSTEM] Loading API keys from .env...
+[SYSTEM] Checking provider availability...
+[SYSTEM] Provider status will update once API keys are configured.
+[SYSTEM] Go to Settings > API Keys to add your keys.
+[SYSTEM] Wake word "Hey ARIA" listener active.
+[SYSTEM] UI initialized successfully.</pre>
+              </div>
+            </div>
+            <div class="settings-group">
+              <label class="settings-label">Python Bridge</label>
+              <div class="bridge-status">
+                <span class="bridge-dot bridge-dot--connected"></span>
+                <span>Connected on ws://localhost:8765</span>
+                <button id="btn-restart-bridge" class="btn btn--secondary btn--small">Restart</button>
+              </div>
+            </div>
+            <div class="settings-divider"></div>
+            <div class="settings-group">
+              <label class="settings-label">Danger Zone</label>
+              <div class="danger-actions">
+                <button class="btn btn--danger" id="btn-clear-history">Clear Conversation History</button>
+                <button class="btn btn--danger" id="btn-clear-memory">Clear All Memory</button>
+                <button class="btn btn--danger" id="btn-clear-chroma">Clear ChromaDB</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

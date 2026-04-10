@@ -1,0 +1,31 @@
+{
+  "name": "aria-desktop",
+  "version": "1.0.0",
+  "description": "ARIA — Autonomous Reasoning Intelligence Agent",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest",
+    "@google/generative-ai": "latest",
+    "axios": "latest",
+    "better-sqlite3": "latest",
+    "chokidar": "latest",
+    "dotenv": "latest",
+    "electron": "^28.0.0",
+    "elevenlabs": "latest",
+    "form-data": "^4.0.5",
+    "node-global-key-listener": "latest",
+    "node-record-lpcm16": "latest",
+    "openai": "latest",
+    "playwright": "latest",
+    "ws": "latest"
+  },
+  "devDependencies": {
+    "electron-builder": "latest"
+  },
+  "author": "ARIA Project",
+  "license": "MIT"
+}
